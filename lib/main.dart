@@ -1,10 +1,11 @@
-import 'package:chess_clock/clockpage.dart';
 import 'package:chess_clock/config.dart';
-import 'package:chess_clock/homepage.dart';
+import 'package:chess_clock/gui/clockpage.dart';
+import 'package:chess_clock/gui/homepage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const ProviderScope(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: switch (config) {
-        Config.clockpage => Clockpage(),
+        Config.clockpage => ClockPage(),
         Config.homepage => Homepage(),
       },
     );
