@@ -1,20 +1,29 @@
-import 'package:chess_clock/gui/game_page.dart';
+import 'package:chess_clock/gui/time_gridview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+final openedBarIndexProvider = NotifierProvider<OpenedBarNotifier, int?>(() {
+  return OpenedBarNotifier();
+});
+
+class OpenedBarNotifier extends Notifier<int?> {
+  @override
+  int? build() => null;
+
+  void toggleBar(int index) {
+    state = state == index ? null : index;
+  }
+}
 
 class ChooseGamemodePage extends ConsumerWidget {
   const ChooseGamemodePage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    int? openedBarIndex;
+    final openedBarIndex = ref.watch(openedBarIndexProvider);
 
-    void toggleBarWidget(int index) {
-      if (openedBarIndex == index) {
-        openedBarIndex = null;
-      } else {
-        openedBarIndex = index;
-      }
+    void toggleBar(int index) {
+      ref.read(openedBarIndexProvider.notifier).toggleBar(index);
     }
 
     final List<String> gamemode = ['BULLET', 'BLITZ', 'RAPID', 'CLASSICAL'];
@@ -33,7 +42,7 @@ class ChooseGamemodePage extends ConsumerWidget {
               return Column(
                 children: [
                   GestureDetector(
-                    onTap: () => toggleBarWidget(index),
+                    onTap: () => toggleBar(index),
                     child: AnimatedContainer(
                       duration: const Duration(milliseconds: 450),
                       curve: Curves.easeInOut,
@@ -51,60 +60,7 @@ class ChooseGamemodePage extends ConsumerWidget {
                   AnimatedSize(
                     duration: const Duration(milliseconds: 220),
                     curve: Curves.easeInOut,
-                    child: isOpen
-                        ? GridView.count(
-                            crossAxisCount: 3,
-                            shrinkWrap: true,
-                            physics: NeverScrollableScrollPhysics(),
-                            children: [
-                              ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.zero,
-                                  ),
-                                ),
-                                onPressed: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          GamePage(selectedTime: 180),
-                                    ),
-                                  );
-                                },
-                                child: const Text(
-                                  '1',
-                                  textScaler: TextScaler.linear(2),
-                                ),
-                              ),
-
-                              ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.zero,
-                                  ),
-                                ),
-                                onPressed: () {},
-                                child: const Text(
-                                  '2',
-                                  textScaler: TextScaler.linear(2),
-                                ),
-                              ),
-                              ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.zero,
-                                  ),
-                                ),
-                                onPressed: () {},
-                                child: const Text(
-                                  '3',
-                                  textScaler: TextScaler.linear(2),
-                                ),
-                              ),
-                            ],
-                          )
-                        : const SizedBox.shrink(),
+                    child: isOpen ? TimeGridView() : const SizedBox.shrink(),
                   ),
                 ],
               );

@@ -1,16 +1,12 @@
-import 'dart:async';
-
 import 'package:chess_clock/state/time_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class GamePage extends ConsumerWidget {
-  final double selectedTime;
-  const GamePage({super.key, required this.selectedTime});
+  const GamePage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    ref.read(timeProvider.notifier).setTime(selectedTime);
     final timeState = ref.watch(timeProvider);
 
     return Scaffold(
@@ -34,11 +30,11 @@ class GamePage extends ConsumerWidget {
                     onPressed: () {
                       ref.read(timeProvider.notifier).startTimer();
                     },
+                    color: Colors.deepPurple,
                     child: Text(
                       'START TIMER',
                       style: TextStyle(color: Colors.white),
                     ),
-                    color: Colors.deepPurple,
                   ),
                 ],
               ),
@@ -50,11 +46,13 @@ class GamePage extends ConsumerWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text('time', style: TextStyle(fontSize: 40)),
+                  Text('${timeState.time}', style: TextStyle(fontSize: 40)),
                   MaterialButton(
-                    onPressed: () {},
-                    child: Text('START TIMER'),
+                    onPressed: () {
+                      ref.read(timeProvider.notifier).startTimer();
+                    },
                     color: Colors.deepPurple,
+                    child: Text('START TIMER'),
                   ),
                 ],
               ),

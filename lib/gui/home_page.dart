@@ -1,5 +1,4 @@
 import 'package:chess_clock/gui/choose_gamemode_page.dart';
-import 'package:chess_clock/gui/game_page.dart';
 import 'package:flutter/material.dart';
 
 class Homepage extends StatelessWidget {

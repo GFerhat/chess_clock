@@ -2,25 +2,22 @@ import 'dart:async';
 import 'package:chess_clock/state/time.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'dart:async';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 final timeProvider = NotifierProvider<TimeNotifier, Time>(() => TimeNotifier());
 
 class TimeNotifier extends Notifier<Time> {
   Timer? _timer;
 
   @override
-  Time build() => Time(180); // default time
+  Time build() => Time(0); // default time
 
   void setTime(double newTime) {
     state = Time(newTime, runTime: state.runTime);
   }
 
   void startTimer() {
-    if (_timer != null) return;
+    if (_timer == null) return;
     _timer = Timer.periodic(const Duration(milliseconds: 10), (timer) {
-      if (state.runTime) {
+      if (!state.runTime) {
         state = Time(state.time - 0.01, runTime: true);
       }
     });
@@ -36,7 +33,7 @@ class TimeNotifier extends Notifier<Time> {
     state = Time(state.time, runTime: !state.runTime);
   }
 
-  final Map<String, double> presets = {
+  final Map<String, double> timePresets = {
     'bulletOneMin': 60,
     'bulletTwoMin': 120,
     'blitzThreeMin': 180,
