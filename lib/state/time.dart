@@ -1,6 +1,6 @@
 class Time {
-  bool runTime = false;
-  double time;
+  final double time;
+  final bool runTime;
 
-  Time(this.time);
+  Time(this.time, {this.runTime = false});
 }

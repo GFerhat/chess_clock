@@ -5,11 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class GamePage extends ConsumerWidget {
-  const GamePage({super.key});
+  final double selectedTime;
+  const GamePage({super.key, required this.selectedTime});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final timeState = ref.watch(refSettings);
+    ref.read(timeProvider.notifier).setTime(selectedTime);
+    final timeState = ref.watch(timeProvider);
 
     return Scaffold(
       appBar: AppBar(backgroundColor: Colors.blue, title: Text('Clock')),
@@ -25,11 +27,13 @@ class GamePage extends ConsumerWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    "Time",
+                    '${timeState.time}',
                     style: TextStyle(fontSize: 40, color: Colors.white),
                   ),
                   MaterialButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      ref.read(timeProvider.notifier).startTimer();
+                    },
                     child: Text(
                       'START TIMER',
                       style: TextStyle(color: Colors.white),

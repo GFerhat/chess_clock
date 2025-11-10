@@ -1,4 +1,3 @@
-import 'package:chess_clock/config.dart';
 import 'package:chess_clock/gui/game_page.dart';
 import 'package:chess_clock/gui/home_page.dart';
 import 'package:flutter/material.dart';
@@ -11,17 +10,9 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  final config = Config.homepage;
-
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: switch (config) {
-        Config.clockpage => GamePage(),
-        Config.homepage => Homepage(),
-      },
-    );
+    return MaterialApp(debugShowCheckedModeBanner: false, home: Homepage());
   }
 }

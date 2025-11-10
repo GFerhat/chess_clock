@@ -1,26 +1,22 @@
+import 'package:chess_clock/gui/game_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class ChooseGamemodePage extends StatefulWidget {
+class ChooseGamemodePage extends ConsumerWidget {
+  const ChooseGamemodePage({super.key});
+
   @override
-  _ChooseGamemodePageState createState() => _ChooseGamemodePageState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    int? openedBarIndex;
 
-class _ChooseGamemodePageState extends State<ChooseGamemodePage>
-    with TickerProviderStateMixin {
-  int? openedBarIndex;
-
-  void toggleBar(int index) {
-    setState(() {
+    void toggleBarWidget(int index) {
       if (openedBarIndex == index) {
-        openedBarIndex = null; // schließen
+        openedBarIndex = null;
       } else {
-        openedBarIndex = index; // öffnen
+        openedBarIndex = index;
       }
-    });
-  }
+    }
 
-  @override
-  Widget build(BuildContext context) {
     final List<String> gamemode = ['BULLET', 'BLITZ', 'RAPID', 'CLASSICAL'];
     return Scaffold(
       appBar: AppBar(
@@ -37,7 +33,7 @@ class _ChooseGamemodePageState extends State<ChooseGamemodePage>
               return Column(
                 children: [
                   GestureDetector(
-                    onTap: () => toggleBar(index),
+                    onTap: () => toggleBarWidget(index),
                     child: AnimatedContainer(
                       duration: const Duration(milliseconds: 450),
                       curve: Curves.easeInOut,
@@ -67,7 +63,15 @@ class _ChooseGamemodePageState extends State<ChooseGamemodePage>
                                     borderRadius: BorderRadius.zero,
                                   ),
                                 ),
-                                onPressed: () {},
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          GamePage(selectedTime: 180),
+                                    ),
+                                  );
+                                },
                                 child: const Text(
                                   '1',
                                   textScaler: TextScaler.linear(2),
