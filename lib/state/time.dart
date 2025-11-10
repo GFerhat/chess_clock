@@ -1,5 +1,6 @@
 class Time {
-  int time;
+  bool runTime = false;
+  double time;
 
   Time(this.time);
 }
