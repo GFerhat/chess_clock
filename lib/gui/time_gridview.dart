@@ -20,7 +20,7 @@ class TimeGridView extends ConsumerWidget {
           ),
           onPressed: () {
             // Setze die gewählte Zeit im Provider
-            timeNotifier.setTime(300);
+            timeNotifier.setTime(100);
             // z. B. 300 für 5 Minuten
             // Öffne die GamePage
             Navigator.push(
