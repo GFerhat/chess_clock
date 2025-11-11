@@ -1,5 +1,5 @@
 import 'package:chess_clock/gui/game_page.dart';
-import 'package:chess_clock/state/time_state.dart';
+import 'package:chess_clock/state/time_state_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -8,6 +8,7 @@ class TimeGridView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final timeNotifier = ref.read(timeProvider.notifier);
     return GridView.count(
       crossAxisCount: 3,
       shrinkWrap: true,
@@ -19,9 +20,8 @@ class TimeGridView extends ConsumerWidget {
           ),
           onPressed: () {
             // Setze die gewählte Zeit im Provider
-            ref
-                .read(timeProvider.notifier)
-                .setTime(300); // z. B. 300 für 5 Minuten
+            timeNotifier.setTime(300);
+            // z. B. 300 für 5 Minuten
             // Öffne die GamePage
             Navigator.push(
               context,

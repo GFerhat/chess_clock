@@ -1,4 +1,4 @@
-import 'package:chess_clock/state/time_state.dart';
+import 'package:chess_clock/state/time_state_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -8,57 +8,75 @@ class GamePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final timeState = ref.watch(timeProvider);
+    final timeNotifier = ref.read(timeProvider.notifier);
 
-    return Scaffold(
-      appBar: AppBar(backgroundColor: Colors.blue, title: Text('Clock')),
-      body: Column(
-        crossAxisAlignment:
-            CrossAxisAlignment.stretch, // full width horizontally
-        children: [
-          Expanded(
-            flex: 1,
-            child: Container(
-              color: Colors.black,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    '${timeState.time}',
-                    style: TextStyle(fontSize: 40, color: Colors.white),
-                  ),
-                  MaterialButton(
-                    onPressed: () {
-                      ref.read(timeProvider.notifier).startTimer();
-                    },
-                    color: Colors.deepPurple,
-                    child: Text(
-                      'START TIMER',
-                      style: TextStyle(color: Colors.white),
+    return PopScope(
+      onPopInvokedWithResult: (didPop, result) => {timeNotifier.reset()},
+      child: Scaffold(
+        appBar: AppBar(backgroundColor: Colors.blue, title: Text('Clock')),
+        body: Stack(
+          children: [
+            Column(
+              crossAxisAlignment:
+                  CrossAxisAlignment.stretch, // full width horizontally
+              children: [
+                Expanded(
+                  flex: 1,
+                  child: Container(
+                    color: Colors.black,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          timeState.timeBlack.time.toStringAsFixed(2),
+                          style: TextStyle(fontSize: 40, color: Colors.white),
+                        ),
+                        MaterialButton(
+                          onPressed: () {
+                            ref.read(timeProvider.notifier).toggleRunTime();
+                          },
+                          color: Colors.deepPurple,
+                          child: Text(
+                            'START TIMER',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                ],
-              ),
-            ),
-          ),
-          Expanded(
-            flex: 1,
-            child: Container(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text('${timeState.time}', style: TextStyle(fontSize: 40)),
-                  MaterialButton(
-                    onPressed: () {
-                      ref.read(timeProvider.notifier).startTimer();
-                    },
-                    color: Colors.deepPurple,
-                    child: Text('START TIMER'),
+                ),
+                Expanded(
+                  flex: 1,
+                  child: Container(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          timeState.timeWhite.time.toStringAsFixed(2),
+                          style: TextStyle(fontSize: 40),
+                        ),
+                        MaterialButton(
+                          onPressed: () {
+                            ref.read(timeProvider.notifier).toggleRunTime();
+                          },
+                          color: Colors.deepPurple,
+                          child: Text('START TIMER'),
+                        ),
+                      ],
+                    ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
-          ),
-        ],
+            if (!timeState.init)
+              Center(
+                child: FilledButton(
+                  onPressed: timeNotifier.startTimerBlack,
+                  child: Text('Start'),
+                ),
+              ),
+          ],
+        ),
       ),
     );
   }
