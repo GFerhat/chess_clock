@@ -33,7 +33,7 @@ class GamePage extends ConsumerWidget {
                         ),
                         MaterialButton(
                           onPressed: () {
-                            ref.read(timeProvider.notifier).toggleRunTime();
+                            timeNotifier.toggleRunTime();
                           },
                           color: Colors.deepPurple,
                           child: Text(
@@ -57,7 +57,7 @@ class GamePage extends ConsumerWidget {
                         ),
                         MaterialButton(
                           onPressed: () {
-                            ref.read(timeProvider.notifier).toggleRunTime();
+                            timeNotifier.toggleRunTime();
                           },
                           color: Colors.deepPurple,
                           child: Text('START TIMER'),

@@ -1,4 +1,6 @@
 import 'package:chess_clock/gui/time_gridview.dart';
+import 'package:chess_clock/state/gamemode_state.dart';
+import 'package:chess_clock/state/gamemode_state_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -21,7 +23,7 @@ class ChooseGamemodePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final openedBarIndex = ref.watch(openedBarIndexProvider);
-
+    final gamemodeNotifier = ref.read(gamemodeProvider.notifier);
     void toggleBar(int index) {
       ref.read(openedBarIndexProvider.notifier).toggleBar(index);
     }
@@ -42,7 +44,10 @@ class ChooseGamemodePage extends ConsumerWidget {
               return Column(
                 children: [
                   GestureDetector(
-                    onTap: () => toggleBar(index),
+                    onTap: () {
+                      toggleBar(index);
+                      gamemodeNotifier.setState(Gamemode.values[index]);
+                    },
                     child: AnimatedContainer(
                       duration: const Duration(milliseconds: 450),
                       curve: Curves.easeInOut,

@@ -32,9 +32,7 @@ class TimeNotifier extends Notifier<TimeState> {
   }
 
   void startTimerWhite() {
-    if (state.init == false) {
-      state = state.copyWith(init: true);
-    }
+    if (state.init == false) {}
     _timerWhite = Timer.periodic(const Duration(milliseconds: 10), (timer) {
       state = state.copyWith(
         timeWhite: state.timeWhite.copyWith(
@@ -80,6 +78,8 @@ class TimeNotifier extends Notifier<TimeState> {
   }
 
   void reset() {
+    stopTimerWhite();
+    stopTimerBlack();
     state = TimeState(
       timeBlack: Time(time: 0, runTime: false),
       timeWhite: Time(time: 0, runTime: false),
@@ -92,6 +92,7 @@ class TimeNotifier extends Notifier<TimeState> {
   final Map<String, double> timePresets = {
     'bulletOneMin': 60,
     'bulletTwoMin': 120,
+    'bulletIncrement':60,
     'blitzThreeMin': 180,
     'blitzFiveMin': 300,
     'rapidTenMin': 600,
