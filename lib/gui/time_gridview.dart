@@ -1,4 +1,7 @@
 import 'package:chess_clock/gui/game_page.dart';
+import 'package:chess_clock/state/game_tweaks_notfier.dart';
+import 'package:chess_clock/state/gamemode_state.dart';
+import 'package:chess_clock/state/gamemode_state_provider.dart';
 import 'package:chess_clock/state/time_state_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -9,43 +12,60 @@ class TimeGridView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final timeNotifier = ref.read(timeProvider.notifier);
+    final gamemodeState = ref.watch(gamemodeProvider);
+    final selected = ref.watch(gameTweaksProvider);
+
+    final Gamemode currentGamemode = gamemodeState.gamemode;
+
+    const int variantsCount = 3;
     return GridView.count(
-      crossAxisCount: 3,
+      crossAxisCount: variantsCount,
       shrinkWrap: true,
-      physics: NeverScrollableScrollPhysics(),
-      children: [
-        ElevatedButton(
+      physics: const NeverScrollableScrollPhysics(),
+      children: List.generate(variantsCount, (variant) {
+        final buttonText = getButtonText(currentGamemode, variant);
+        return ElevatedButton(
           style: ElevatedButton.styleFrom(
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero),
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.zero,
+            ),
           ),
           onPressed: () {
-            // Setze die gewählte Zeit im Provider
-            timeNotifier.setTime(100);
-            // z. B. 300 für 5 Minuten
-            // Öffne die GamePage
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => GamePage()),
-            );
-          },
-          child: const Text('1', textScaler: TextScaler.linear(2)),
-        ),
+            ref
+                .read(gameTweaksProvider.notifier)
+                .updateGameTweaks(currentGamemode, variant);
+            if (selected != null) {
+              // Setze die Zeit im Timer
+              timeNotifier.setTime(selected);
 
-        ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero),
-          ),
-          onPressed: () {},
-          child: const Text('2', textScaler: TextScaler.linear(2)),
-        ),
-        ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero),
-          ),
-          onPressed: () {},
-          child: const Text('3', textScaler: TextScaler.linear(2)),
-        ),
-      ],
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => GamePage()),
+              );
+            }
+          },
+          child: Text(buttonText, style: TextStyle(fontSize: 20)),
+        );
+      }),
     );
+  }
+}
+
+String getButtonText(Gamemode mode, int variant) {
+  switch (mode) {
+    case Gamemode.bullet:
+      const texts = ['1', '2', '1+2'];
+      return texts[variant];
+    case Gamemode.blitz:
+      const texts = ['3', '5', '3+2'];
+      return texts[variant];
+    case Gamemode.rapid:
+      const texts = ['10', '15', '10+2'];
+      return texts[variant];
+    case Gamemode.classical:
+      const texts = ['40', '60', '40+10'];
+      return texts[variant];
+    case Gamemode.none:
+      return '';
   }
 }

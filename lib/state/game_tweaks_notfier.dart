@@ -1,36 +1,53 @@
 import 'package:chess_clock/state/gamemode_state.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+final gameTweaksProvider = NotifierProvider<GameTweaksNotifier, TimeTweak?>(
+  () => GameTweaksNotifier(),
+);
 
+class GameTweaksNotifier extends Notifier<TimeTweak?> {
+  @override
+  TimeTweak? build() => null;
+
+  void updateGameTweaks(Gamemode mode, int variant) {
+    state = GameTweaks.gameTweaks[mode.index][variant];
+  }
+}
 
 class GameTweaks {
-  final List<List<Map<String, double>>> gameTweaks = [
+  static List<List<TimeTweak>> gameTweaks = [
     [
-      {'increment': 0, 'gameTime': 60},
-      {'increment': 0, 'gameTime': 120},
-      {'increment': 2, 'gameTime': 60},
+      TimeTweak(increment: 0, gametime: 60),
+      TimeTweak(increment: 0, gametime: 120),
+      TimeTweak(increment: 2, gametime: 60),
     ],
     [
-      {'increment': 0, 'gameTime': 180},
-      {'increment': 0, 'gameTime': 300},
-      {'increment': 2, 'gameTime': 180},
+      TimeTweak(increment: 0, gametime: 180),
+      TimeTweak(increment: 0, gametime: 300),
+      TimeTweak(increment: 2, gametime: 180),
     ],
     [
-      {'increment': 0, 'gameTime': 600},
-      {'increment': 0, 'gameTime': 900},
-      {'increment': 2, 'gameTime': 600},
+      TimeTweak(increment: 0, gametime: 600),
+      TimeTweak(increment: 0, gametime: 900),
+      TimeTweak(increment: 2, gametime: 600),
     ],
     [
-      {'increment': 0, 'gameTime': 2400},
-      {'increment': 0, 'gameTime': 3600},
-      {'increment': 10, 'gameTime': 2400},
+      TimeTweak(increment: 0, gametime: 2400),
+      TimeTweak(increment: 0, gametime: 3600),
+      TimeTweak(increment: 10, gametime: 2400),
     ],
   ];
 
-  double? gametime;
-  double? increment;
-  GameTweaks(Gamemode mode, int variant) {
-    Map<String, double> params = gameTweaks[mode.index][variant];
-    increment = params['increment'];
-    gametime = params['gametime'];
-  }
+  int gametime;
+  int increment;
+
+  GameTweaks(Gamemode mode, int variant)
+    : increment = gameTweaks[mode.index][variant].increment,
+      gametime = gameTweaks[mode.index][variant].gametime;
+}
+
+class TimeTweak {
+  final int increment;
+  final int gametime;
+  TimeTweak({required this.increment, required this.gametime});
 }

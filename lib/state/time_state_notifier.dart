@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:chess_clock/state/game_tweaks_notfier.dart';
 import 'package:chess_clock/state/time.dart';
 import 'package:chess_clock/state/time_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -18,17 +19,21 @@ class TimeNotifier extends Notifier<TimeState> {
     init: false,
   ); // default time
 
-  void setTime(double newTime) {
-    setTimeWhite(newTime);
-    setTimeBlack(newTime);
+  void setTime(TimeTweak timeTweak) {
+    initTimeWhite(timeTweak);
+    initTimeBlack(timeTweak);
   }
 
-  void setTimeBlack(double newTime) {
-    state = state.copyWith(timeBlack: state.timeBlack.copyWith(time: newTime));
+  void initTimeBlack(TimeTweak timeTweak) {
+    state = state.copyWith(
+      timeBlack: state.timeBlack.copyWith(time: timeTweak.gametime.toDouble()),
+    );
   }
 
-  void setTimeWhite(double newTime) {
-    state = state.copyWith(timeWhite: state.timeWhite.copyWith(time: newTime));
+  void initTimeWhite(TimeTweak timeTweak) {
+    state = state.copyWith(
+      timeWhite: state.timeWhite.copyWith(time: timeTweak.gametime.toDouble()),
+    );
   }
 
   void startTimerWhite() {
@@ -88,6 +93,4 @@ class TimeNotifier extends Notifier<TimeState> {
     _timerBlack = null;
     _timerWhite = null;
   }
-
-
 }
