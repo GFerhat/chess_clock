@@ -89,13 +89,5 @@ class TimeNotifier extends Notifier<TimeState> {
     _timerWhite = null;
   }
 
-  final List<List<Map<String, int>>> gameTypes = [
-    [
-      {'increment': 0, 'gameTime': 60},
-      {'increment': 0, 'gameTime': 120},
-      {'increment': 1, 'gameTime': 60},
-    ],
-    [{}],
-    [{}],
-  ];
+
 }
