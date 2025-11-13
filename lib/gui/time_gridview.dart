@@ -13,7 +13,6 @@ class TimeGridView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final timeNotifier = ref.read(timeProvider.notifier);
     final gamemodeState = ref.watch(gamemodeProvider);
-    final selected = ref.watch(gameTweaksProvider);
 
     final Gamemode currentGamemode = gamemodeState.gamemode;
 
@@ -30,14 +29,16 @@ class TimeGridView extends ConsumerWidget {
               borderRadius: BorderRadius.zero,
             ),
           ),
-          onPressed: () {
+          onPressed: () async {
             ref
                 .read(gameTweaksProvider.notifier)
                 .updateGameTweaks(currentGamemode, variant);
-            if (selected != null) {
-              // Setze die Zeit im Timer
-              timeNotifier.setTime(selected);
 
+            await Future.delayed(const Duration(milliseconds: 1));
+            final selected = ref.read(gameTweaksProvider);
+            //set die Zeit im Timer
+            timeNotifier.setTime(selected!);
+            if (context.mounted) {
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (_) => GamePage()),

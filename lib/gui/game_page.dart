@@ -52,7 +52,7 @@ class GamePage extends ConsumerWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          timeState.timeWhite.time.toStringAsFixed(2),
+                          toClocktimerAsString(timeState.timeWhite.time),
                           style: TextStyle(fontSize: 40),
                         ),
                         MaterialButton(
@@ -79,5 +79,22 @@ class GamePage extends ConsumerWidget {
         ),
       ),
     );
+  }
+
+  String toClocktimerAsString(double time) {
+    var clockTimeAsString =
+        '${getMinutesToString(time)} : ${getSecondsToString(time)}';
+    return clockTimeAsString;
+  }
+
+  String getMinutesToString(double time) {
+    var minutesToString = '';
+
+    return minutesToString;
+  }
+
+  String getSecondsToString(double time) {
+    var minutesToString = '';
+    return minutesToString;
   }
 }

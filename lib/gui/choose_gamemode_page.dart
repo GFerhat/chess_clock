@@ -55,7 +55,7 @@ class ChooseGamemodePage extends ConsumerWidget {
                       height: 120,
                       child: Center(
                         child: Text(
-                          '${gamemode[index]}',
+                          gamemode[index],
                           textScaler: TextScaler.linear(2),
                           style: TextStyle(color: Colors.white),
                         ),

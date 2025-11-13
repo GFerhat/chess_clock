@@ -1,4 +1,3 @@
-import 'package:chess_clock/gui/game_page.dart';
 import 'package:chess_clock/gui/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

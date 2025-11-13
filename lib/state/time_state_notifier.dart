@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:chess_clock/state/game_tweaks_notfier.dart';
+import 'package:chess_clock/state/gamemode_state_provider.dart';
 import 'package:chess_clock/state/time.dart';
 import 'package:chess_clock/state/time_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -74,12 +75,32 @@ class TimeNotifier extends Notifier<TimeState> {
 
   void toggleRunTime() {
     if (state.timeWhite.runTime) {
+      incrementTimeWhite();
       stopTimerWhite();
       startTimerBlack();
     } else {
+      incrementTimeBlack();
       stopTimerBlack();
       startTimerWhite();
     }
+  }
+
+  incrementTimeWhite() {
+    final variant = ref.read(gameTweaksProvider);
+    state = state.copyWith(
+      timeWhite: state.timeWhite.copyWith(
+        time: state.timeWhite.time + variant!.increment,
+      ),
+    );
+  }
+
+  incrementTimeBlack() {
+    final variant = ref.read(gameTweaksProvider);
+    state = state.copyWith(
+      timeBlack: state.timeBlack.copyWith(
+        time: state.timeBlack.time + variant!.increment,
+      ),
+    );
   }
 
   void reset() {
