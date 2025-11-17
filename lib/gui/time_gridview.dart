@@ -22,51 +22,51 @@ class TimeGridView extends ConsumerWidget {
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       children: List.generate(variantsCount, (variant) {
-        final buttonText = getButtonText(currentGamemode, variant);
         return ElevatedButton(
           style: ElevatedButton.styleFrom(
             shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.zero,
             ),
           ),
-          onPressed: () async {
+          onPressed: () {
             ref
                 .read(gameTweaksProvider.notifier)
                 .updateGameTweaks(currentGamemode, variant);
 
-            await Future.delayed(const Duration(milliseconds: 1));
-            final selected = ref.read(gameTweaksProvider);
+            final selected = ref.watch(gameTweaksProvider);
             //set die Zeit im Timer
             timeNotifier.setTime(selected!);
-            if (context.mounted) {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (_) => GamePage()),
-              );
-            }
+
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => GamePage()),
+            );
           },
-          child: Text(buttonText, style: TextStyle(fontSize: 20)),
+          child: Text(
+            currentGamemode.modes[variant],
+            style: TextStyle(fontSize: 20),
+          ),
         );
       }),
     );
   }
-}
 
-String getButtonText(Gamemode mode, int variant) {
-  switch (mode) {
-    case Gamemode.bullet:
-      const texts = ['1', '2', '1+2'];
-      return texts[variant];
-    case Gamemode.blitz:
-      const texts = ['3', '5', '3+2'];
-      return texts[variant];
-    case Gamemode.rapid:
-      const texts = ['10', '15', '10+2'];
-      return texts[variant];
-    case Gamemode.classical:
-      const texts = ['40', '60', '40+10'];
-      return texts[variant];
-    case Gamemode.none:
-      return '';
-  }
+  // String _getButtonText(Gamemode mode, int variant) {
+  //   switch (mode) {
+  //     case Gamemode.bullet:
+  //       const texts = ['1', '2', '1+2'];
+  //       return texts[variant];
+  //     case Gamemode.blitz:
+  //       const texts = ['3', '5', '3+2'];
+  //       return texts[variant];
+  //     case Gamemode.rapid:
+  //       const texts = ['10', '15', '10+2'];
+  //       return texts[variant];
+  //     case Gamemode.classical:
+  //       const texts = ['40', '60', '40+10'];
+  //       return texts[variant];
+  //     case Gamemode.none:
+  //       return '';
+  //   }
+  // }
 }

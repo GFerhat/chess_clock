@@ -114,4 +114,22 @@ class TimeNotifier extends Notifier<TimeState> {
     _timerBlack = null;
     _timerWhite = null;
   }
+
+  /*in the making
+    
+    String toClocktimerAsString(double time) {
+    var clockTimeAsString =
+        '${getMinutesToString(time)} : ${getSecondsToString(time)}';
+    return clockTimeAsString;
+  }
+
+  String getMinutesToString(double time) {
+    int minutes = (time / 60.0).floor();
+    return minutes.toString();
+  }
+
+  String getSecondsToString(double time) {
+    var secondsToString = '';
+    return secondsToString;
+  }*/
 }
