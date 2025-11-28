@@ -1,4 +1,4 @@
-import 'package:chess_clock/gui/home_page.dart';
+import 'package:chess_clock/gui/choose_gamemode_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -12,6 +12,9 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(debugShowCheckedModeBanner: false, home: Homepage());
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: ChooseGamemodePage(),
+    );
   }
 }

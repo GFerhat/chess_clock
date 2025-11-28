@@ -24,17 +24,17 @@ class GameTweaks {
     [
       TimeTweak(increment: 0, gametime: 180),
       TimeTweak(increment: 0, gametime: 300),
-      TimeTweak(increment: 2, gametime: 180),
+      TimeTweak(increment: 3, gametime: 180),
     ],
     [
       TimeTweak(increment: 0, gametime: 600),
       TimeTweak(increment: 0, gametime: 900),
-      TimeTweak(increment: 2, gametime: 600),
+      TimeTweak(increment: 10, gametime: 600),
     ],
     [
-      TimeTweak(increment: 0, gametime: 2400),
-      TimeTweak(increment: 0, gametime: 3600),
-      TimeTweak(increment: 10, gametime: 2400),
+      TimeTweak(increment: 0, gametime: 2700),
+      TimeTweak(increment: 0, gametime: 7200),
+      TimeTweak(increment: 15, gametime: 2700),
     ],
   ];
 

@@ -50,23 +50,4 @@ class TimeGridView extends ConsumerWidget {
       }),
     );
   }
-
-  // String _getButtonText(Gamemode mode, int variant) {
-  //   switch (mode) {
-  //     case Gamemode.bullet:
-  //       const texts = ['1', '2', '1+2'];
-  //       return texts[variant];
-  //     case Gamemode.blitz:
-  //       const texts = ['3', '5', '3+2'];
-  //       return texts[variant];
-  //     case Gamemode.rapid:
-  //       const texts = ['10', '15', '10+2'];
-  //       return texts[variant];
-  //     case Gamemode.classical:
-  //       const texts = ['40', '60', '40+10'];
-  //       return texts[variant];
-  //     case Gamemode.none:
-  //       return '';
-  //   }
-  // }
 }

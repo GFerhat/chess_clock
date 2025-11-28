@@ -22,6 +22,7 @@ class GamePage extends ConsumerWidget {
               children: [
                 Expanded(
                   flex: 1,
+                  //Black
                   child: Container(
                     color: Colors.black,
                     child: Column(
@@ -31,22 +32,24 @@ class GamePage extends ConsumerWidget {
                           timeState.timeBlack.time.toStringAsFixed(2),
                           style: TextStyle(fontSize: 40, color: Colors.white),
                         ),
-                        MaterialButton(
-                          onPressed: () {
-                            timeNotifier.toggleRunTime();
-                          },
-                          color: Colors.deepPurple,
-                          child: Text(
-                            'START TIMER',
-                            style: TextStyle(color: Colors.white),
+                        if (timeState.init && timeState.timeBlack.runTime)
+                          MaterialButton(
+                            onPressed: () {
+                              timeNotifier.toggleRunTime();
+                            },
+                            color: Colors.deepPurple,
+                            child: Text(
+                              'PASS TURN',
+                              style: TextStyle(color: Colors.white),
+                            ),
                           ),
-                        ),
                       ],
                     ),
                   ),
                 ),
                 Expanded(
                   flex: 1,
+                  //White
                   child: Container(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -55,26 +58,34 @@ class GamePage extends ConsumerWidget {
                           timeState.timeWhite.time.toStringAsFixed(2),
                           style: TextStyle(fontSize: 40),
                         ),
-                        MaterialButton(
-                          onPressed: () {
-                            timeNotifier.toggleRunTime();
-                          },
-                          color: Colors.deepPurple,
-                          child: Text('START TIMER'),
-                        ),
+                        if (timeState.init && timeState.timeWhite.runTime)
+                          MaterialButton(
+                            onPressed: () {
+                              timeNotifier.toggleRunTime();
+                            },
+                            color: Colors.deepPurple,
+                            child: Text('PASS TURN'),
+                          ),
                       ],
                     ),
                   ),
                 ),
               ],
             ),
-            if (!timeState.init)
-              Center(
-                child: FilledButton(
-                  onPressed: timeNotifier.startTimerBlack,
-                  child: Text('Start'),
-                ),
-              ),
+            !timeState.init
+                ? Center(
+                    child: FilledButton(
+                      onPressed: timeNotifier.startTimerBlack,
+                      child: Text('Play'),
+                    ),
+                  )
+                : Center(
+                    child: FilledButton(
+                      onPressed: () {},
+                      onLongPress: timeNotifier.stopTimerAll,
+                      child: Text('hold to Stop'),
+                    ),
+                  ),
           ],
         ),
       ),

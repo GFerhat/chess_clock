@@ -63,6 +63,12 @@ class TimeNotifier extends Notifier<TimeState> {
     });
   }
 
+  void stopTimerAll() {
+    state = state.copyWith(init: false);
+    stopTimerBlack();
+    stopTimerWhite();
+  }
+
   void stopTimerWhite() {
     _timerWhite?.cancel();
     state = state.copyWith(timeWhite: state.timeWhite.copyWith(runTime: false));
@@ -115,9 +121,7 @@ class TimeNotifier extends Notifier<TimeState> {
     _timerWhite = null;
   }
 
-  /*in the making
-    
-    String toClocktimerAsString(double time) {
+  String toClocktimerAsString(double time) {
     var clockTimeAsString =
         '${getMinutesToString(time)} : ${getSecondsToString(time)}';
     return clockTimeAsString;
@@ -131,5 +135,5 @@ class TimeNotifier extends Notifier<TimeState> {
   String getSecondsToString(double time) {
     var secondsToString = '';
     return secondsToString;
-  }*/
+  }
 }
