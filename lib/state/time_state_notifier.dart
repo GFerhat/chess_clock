@@ -41,6 +41,7 @@ class TimeNotifier extends Notifier<TimeState> {
     if (state.init == false) {}
     _timerWhite = Timer.periodic(const Duration(milliseconds: 10), (timer) {
       state = state.copyWith(
+        init: true,
         timeWhite: state.timeWhite.copyWith(
           time: state.timeWhite.time - 0.01,
           runTime: true,
@@ -55,6 +56,7 @@ class TimeNotifier extends Notifier<TimeState> {
     }
     _timerBlack = Timer.periodic(const Duration(milliseconds: 10), (timer) {
       state = state.copyWith(
+        init: true,
         timeBlack: state.timeBlack.copyWith(
           time: state.timeBlack.time - 0.01,
           runTime: true,
@@ -63,8 +65,9 @@ class TimeNotifier extends Notifier<TimeState> {
     });
   }
 
-  void stopTimerAll() {
-    state = state.copyWith(init: false);
+  stopTimerAll() {
+    final lastActive = state.timeBlack.runTime ? 'black' : 'white';
+    state = state.copyWith(init: false, lastActivePlayer: lastActive);
     stopTimerBlack();
     stopTimerWhite();
   }

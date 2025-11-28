@@ -32,7 +32,7 @@ class GamePage extends ConsumerWidget {
                           timeState.timeBlack.time.toStringAsFixed(2),
                           style: TextStyle(fontSize: 40, color: Colors.white),
                         ),
-                        if (timeState.init && timeState.timeBlack.runTime)
+                        if (timeState.timeBlack.runTime)
                           MaterialButton(
                             onPressed: () {
                               timeNotifier.toggleRunTime();
@@ -58,7 +58,7 @@ class GamePage extends ConsumerWidget {
                           timeState.timeWhite.time.toStringAsFixed(2),
                           style: TextStyle(fontSize: 40),
                         ),
-                        if (timeState.init && timeState.timeWhite.runTime)
+                        if (timeState.timeWhite.runTime)
                           MaterialButton(
                             onPressed: () {
                               timeNotifier.toggleRunTime();
@@ -75,7 +75,13 @@ class GamePage extends ConsumerWidget {
             !timeState.init
                 ? Center(
                     child: FilledButton(
-                      onPressed: timeNotifier.startTimerBlack,
+                      onPressed: () {
+                        if (timeState.lastActivePlayer == 'black') {
+                          timeNotifier.startTimerBlack();
+                        } else {
+                          timeNotifier.startTimerWhite();
+                        }
+                      },
                       child: Text('Play'),
                     ),
                   )
