@@ -1,11 +1,11 @@
 import 'dart:async';
-import 'dart:developer';
 import 'package:chess_clock/notifier_provider/game_tweaks_notfier.dart';
 import 'package:chess_clock/notifier_provider/gamemode_state_provider.dart';
 import 'package:chess_clock/models/time.dart';
 import 'package:chess_clock/models/time_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+const secondsPerTick = 0.01;
 final timeProvider = NotifierProvider<TimeNotifier, TimeState>(
   () => TimeNotifier(),
 );
@@ -38,28 +38,42 @@ class TimeNotifier extends Notifier<TimeState> {
     );
   }
 
-  void startTimerWhite() {
+  bool checkForTimeout() {
+    String loser = 'White';
+    if (state.timeWhite.time <= secondsPerTick ||
+        state.timeBlack.time <= secondsPerTick) {
+      stopTimerAll();
+      if (state.timeBlack.time <= secondsPerTick) loser = 'black';
+      state = state.copyWith(loser: loser, timeRanOut: true);
+      return true;
+    }
+    return false;
+  }
+
+  void runTimerWhite() {
     if (state.init == false) {}
     _timerWhite = Timer.periodic(const Duration(milliseconds: 10), (timer) {
+      if (checkForTimeout()) return;
       state = state.copyWith(
         init: true,
         timeWhite: state.timeWhite.copyWith(
-          time: state.timeWhite.time - 0.01,
+          time: state.timeWhite.time - secondsPerTick,
           runTime: true,
         ),
       );
     });
   }
 
-  void startTimerBlack() {
+  void runTimerBlack() {
     if (state.init == false) {
       state = state.copyWith(init: true);
     }
     _timerBlack = Timer.periodic(const Duration(milliseconds: 10), (timer) {
+      if (checkForTimeout()) return;
       state = state.copyWith(
         init: true,
         timeBlack: state.timeBlack.copyWith(
-          time: state.timeBlack.time - 0.01,
+          time: state.timeBlack.time - secondsPerTick,
           runTime: true,
         ),
       );
@@ -87,11 +101,11 @@ class TimeNotifier extends Notifier<TimeState> {
     if (state.timeWhite.runTime) {
       incrementTimeWhite();
       stopTimerWhite();
-      startTimerBlack();
+      runTimerBlack();
     } else {
       incrementTimeBlack();
       stopTimerBlack();
-      startTimerWhite();
+      runTimerWhite();
     }
   }
 

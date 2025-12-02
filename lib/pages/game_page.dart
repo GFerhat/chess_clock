@@ -1,5 +1,6 @@
 import 'package:chess_clock/notifier_provider/time_state_notifier.dart';
 import 'package:chess_clock/widgets/black_clock_interface.dart';
+import 'package:chess_clock/widgets/lose_screen.dart';
 import 'package:chess_clock/widgets/white_clock_interface.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -32,14 +33,16 @@ class GamePage extends ConsumerWidget {
                 ),
               ],
             ),
+            if (timeState.timeRanOut)
+              LoseScreen(loser: timeState.loser ?? 'Nobody'),
             !timeState.init
                 ? Center(
                     child: FilledButton(
                       onPressed: () {
                         if (timeState.lastActivePlayer == 'black') {
-                          timeNotifier.startTimerBlack();
+                          timeNotifier.runTimerBlack();
                         } else {
-                          timeNotifier.startTimerWhite();
+                          timeNotifier.runTimerWhite();
                         }
                       },
                       child: Text('Play'),

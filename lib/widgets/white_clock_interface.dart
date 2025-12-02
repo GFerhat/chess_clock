@@ -17,24 +17,22 @@ class WhiteClockInterface extends StatelessWidget {
     return Expanded(
       flex: 1,
       //White
-      child: Container(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              timeState.timeWhite.time.toStringAsFixed(2),
-              style: TextStyle(fontSize: 40),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            timeNotifier.toClocktimerAsString(timeState.timeWhite.time),
+            style: TextStyle(fontSize: 40),
+          ),
+          if (timeState.timeWhite.runTime)
+            MaterialButton(
+              onPressed: () {
+                timeNotifier.toggleRunTime();
+              },
+              color: Colors.deepPurple,
+              child: Text('PASS TURN'),
             ),
-            if (timeState.timeWhite.runTime)
-              MaterialButton(
-                onPressed: () {
-                  timeNotifier.toggleRunTime();
-                },
-                color: Colors.deepPurple,
-                child: Text('PASS TURN'),
-              ),
-          ],
-        ),
+        ],
       ),
     );
   }

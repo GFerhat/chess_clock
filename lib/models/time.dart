@@ -7,4 +7,6 @@ class Time {
   Time copyWith({double? time, bool? runTime}) {
     return Time(time: time ?? this.time, runTime: runTime ?? this.runTime);
   }
+
+  void operator >(int other) {}
 }

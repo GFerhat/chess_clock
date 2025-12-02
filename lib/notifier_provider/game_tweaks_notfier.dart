@@ -17,7 +17,7 @@ class GameTweaksNotifier extends Notifier<TimeTweak?> {
 class GameTweaks {
   static List<List<TimeTweak>> gameTweaks = [
     [
-      TimeTweak(increment: 0, gametime: 60),
+      TimeTweak(increment: 0, gametime: 2),
       TimeTweak(increment: 0, gametime: 120),
       TimeTweak(increment: 2, gametime: 60),
     ],
