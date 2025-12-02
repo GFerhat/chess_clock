@@ -1,6 +1,6 @@
-import 'package:chess_clock/gui/time_gridview.dart';
-import 'package:chess_clock/state/gamemode_state.dart';
-import 'package:chess_clock/state/gamemode_state_provider.dart';
+import 'package:chess_clock/widgets/time_gridview.dart';
+import 'package:chess_clock/models/gamemode_state.dart';
+import 'package:chess_clock/notifier_provider/gamemode_state_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -30,11 +30,7 @@ class ChooseGamemodePage extends ConsumerWidget {
 
     final List<String> gamemode = ['BULLET', 'BLITZ', 'RAPID', 'CLASSICAL'];
     return Scaffold(
-      appBar: AppBar(
-        leading: BackButton(),
-        title: const Text('G A M E   M O D E'),
-        centerTitle: true,
-      ),
+      appBar: AppBar(title: const Text('G A M E   M O D E'), centerTitle: true),
       body: Center(
         child: SizedBox(
           child: Column(

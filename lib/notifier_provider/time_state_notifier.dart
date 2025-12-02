@@ -1,8 +1,9 @@
 import 'dart:async';
-import 'package:chess_clock/state/game_tweaks_notfier.dart';
-import 'package:chess_clock/state/gamemode_state_provider.dart';
-import 'package:chess_clock/state/time.dart';
-import 'package:chess_clock/state/time_state.dart';
+import 'dart:developer';
+import 'package:chess_clock/notifier_provider/game_tweaks_notfier.dart';
+import 'package:chess_clock/notifier_provider/gamemode_state_provider.dart';
+import 'package:chess_clock/models/time.dart';
+import 'package:chess_clock/models/time_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final timeProvider = NotifierProvider<TimeNotifier, TimeState>(
@@ -125,18 +126,16 @@ class TimeNotifier extends Notifier<TimeState> {
   }
 
   String toClocktimerAsString(double time) {
-    var clockTimeAsString =
-        '${getMinutesToString(time)} : ${getSecondsToString(time)}';
-    return clockTimeAsString;
+    return '${_getMinutesToString(time)} : ${_getSecondsToString(time)}';
   }
 
-  String getMinutesToString(double time) {
+  String _getMinutesToString(double time) {
     int minutes = (time / 60.0).floor();
-    return minutes.toString();
+    return minutes.toString().padLeft(2, '0');
   }
 
-  String getSecondsToString(double time) {
-    var secondsToString = '';
-    return secondsToString;
+  String _getSecondsToString(double time) {
+    final seconds = (time % 60).floor();
+    return seconds.toString().padLeft(2, '0');
   }
 }

@@ -1,8 +1,8 @@
-import 'package:chess_clock/gui/game_page.dart';
-import 'package:chess_clock/state/game_tweaks_notfier.dart';
-import 'package:chess_clock/state/gamemode_state.dart';
-import 'package:chess_clock/state/gamemode_state_provider.dart';
-import 'package:chess_clock/state/time_state_notifier.dart';
+import 'package:chess_clock/pages/game_page.dart';
+import 'package:chess_clock/notifier_provider/game_tweaks_notfier.dart';
+import 'package:chess_clock/models/gamemode_state.dart';
+import 'package:chess_clock/notifier_provider/gamemode_state_provider.dart';
+import 'package:chess_clock/notifier_provider/time_state_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

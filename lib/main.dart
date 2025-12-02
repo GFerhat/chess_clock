@@ -1,4 +1,4 @@
-import 'package:chess_clock/gui/choose_gamemode_page.dart';
+import 'package:chess_clock/pages/choose_gamemode_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

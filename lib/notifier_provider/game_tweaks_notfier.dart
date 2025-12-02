@@ -1,4 +1,4 @@
-import 'package:chess_clock/state/gamemode_state.dart';
+import 'package:chess_clock/models/gamemode_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final gameTweaksProvider = NotifierProvider<GameTweaksNotifier, TimeTweak?>(

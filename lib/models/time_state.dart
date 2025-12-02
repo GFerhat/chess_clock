@@ -1,4 +1,4 @@
-import 'package:chess_clock/state/time.dart';
+import 'package:chess_clock/models/time.dart';
 
 class TimeState {
   final Time timeBlack;
