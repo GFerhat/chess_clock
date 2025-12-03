@@ -1,6 +1,5 @@
 import 'package:chess_clock/models/time_state.dart';
 import 'package:chess_clock/notifier_provider/time_state_notifier.dart';
-import 'package:chess_clock/widgets/lose_screen.dart';
 import 'package:flutter/material.dart';
 
 class BlackClockInterface extends StatelessWidget {

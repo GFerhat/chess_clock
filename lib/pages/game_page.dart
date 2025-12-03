@@ -33,8 +33,6 @@ class GamePage extends ConsumerWidget {
                 ),
               ],
             ),
-            if (timeState.timeRanOut)
-              LoseScreen(loser: timeState.loser ?? 'Nobody'),
             !timeState.init
                 ? Center(
                     child: FilledButton(
@@ -55,6 +53,8 @@ class GamePage extends ConsumerWidget {
                       child: Text('hold to Stop'),
                     ),
                   ),
+            if (timeState.timeRanOut)
+              LoseScreen(loser: timeState.loser ?? 'Nobody'),
           ],
         ),
       ),

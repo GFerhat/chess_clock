@@ -1,21 +1,9 @@
+import 'package:chess_clock/notifier_provider/open_bar_index_provider.dart';
 import 'package:chess_clock/widgets/time_gridview.dart';
 import 'package:chess_clock/models/gamemode_state.dart';
 import 'package:chess_clock/notifier_provider/gamemode_state_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-final openedBarIndexProvider = NotifierProvider<OpenedBarNotifier, int?>(() {
-  return OpenedBarNotifier();
-});
-
-class OpenedBarNotifier extends Notifier<int?> {
-  @override
-  int? build() => null;
-
-  void toggleBar(int index) {
-    state = state == index ? null : index;
-  }
-}
 
 class ChooseGamemodePage extends ConsumerWidget {
   const ChooseGamemodePage({super.key});

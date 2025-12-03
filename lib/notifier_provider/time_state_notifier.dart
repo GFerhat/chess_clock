@@ -22,17 +22,17 @@ class TimeNotifier extends Notifier<TimeState> {
   ); // default time
 
   void setTime(TimeTweak timeTweak) {
-    initTimeWhite(timeTweak);
-    initTimeBlack(timeTweak);
+    setTimeWhite(timeTweak);
+    setTimeBlack(timeTweak);
   }
 
-  void initTimeBlack(TimeTweak timeTweak) {
+  void setTimeBlack(TimeTweak timeTweak) {
     state = state.copyWith(
       timeBlack: state.timeBlack.copyWith(time: timeTweak.gametime.toDouble()),
     );
   }
 
-  void initTimeWhite(TimeTweak timeTweak) {
+  void setTimeWhite(TimeTweak timeTweak) {
     state = state.copyWith(
       timeWhite: state.timeWhite.copyWith(time: timeTweak.gametime.toDouble()),
     );
